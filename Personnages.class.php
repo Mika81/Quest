@@ -5,6 +5,39 @@ class Personnages{
     private $_nom;
     private $_degats;
     
+    const CEST_MOI = 1;
+    const PERSONNAGE_TUE = 2;
+    const PERSONNAGE_FRAPPE = 3;
+    
+    public function __construct(array $donnes){
+        $this->hydrate($donnes);
+    }
+    
+    public function hydrate(array $donnees){
+        foreach($donnees as $key => $value){
+            $method = 'set'.ucfirst($key);
+            if(method_exists($this, $method)){
+                $this->$method($value);
+            }
+        }
+    }
+    
+    public function frapper(Personnage $perso){
+        if ($perso->id() == $this->_id){
+            return self::CEST_MOI;
+        }
+        return $perso->recevoirCoup();
+    }
+    
+    public function recevoirCoup(){
+        $this->_degats += 5;
+        if($this->_degats >= 100){
+            return self::PERSONNAGE_TUE;
+        }
+        
+        return self::PERSONNAGE_FRAPPE;
+    }
+    
     public function getId(){
         return $this->_id;
     }
@@ -22,15 +55,16 @@ class Personnages{
         }
     }
     public function setNom($nom){
-        $this->_nom = $nom;
-        if(strlen($nom)<= 24){
+        if(strlen($nom)<= 24 && is_string($nom)){
             $this->_nom = $nom;
         }
     }
     public function setDegats($degats){
-        $this->_degats = $degats;
+        $degats = (int) $degats;
         if(strlen($degats)<= 3){
-            $this->_degats = $degats;
+            if($degats >= 0 && $degats <= 100){
+                $this->_degats = $degats;
+            }
         }
     }
 }
