@@ -41,6 +41,12 @@ if (isset($_POST['creer']) && isset($_POST['nom'])) {
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
     </head>
     <body>
+        <p>Nombre de personnages créés : <?php echo $manager->count(); ?></p>
+        <?php
+        if (isset($message)) {
+            echo '<p>', $message, '</p>';
+        }
+        ?>
         <form action="" method="post">
             <p>
                 Nom : <input type="text" name="nom" maxlength="50" />
