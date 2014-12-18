@@ -1,5 +1,7 @@
 <?php
 
+//  Personnages.class.php
+
 class Personnages{
     private $_id;
     private $_nom;

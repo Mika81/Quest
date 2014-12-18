@@ -1,5 +1,7 @@
 <?php
 
+//  PersonnagesManager.class.php
+
 class PersonnagesManager{
     private $_db;
     
