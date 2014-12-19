@@ -8,6 +8,7 @@ class Personnages{
     private $_degats;
     private $_niveau;
     private $_xp;
+    private $_puissance;
     
     const CEST_MOI = 1;
     const PERSONNAGE_TUE = 2;
@@ -34,16 +35,17 @@ class Personnages{
         if ($perso->getId() == $this->_id){
             return self::CEST_MOI;
         }
-        $this->_xp += 10;
+        $this->_puissance = (floor(($this->_niveau)/2)+5);
+        $this->_xp += $this->_niveau;
         if($this->_xp >= 100){
             $this->_xp = 0;
             $this->_niveau += 1;
         }
-        return $perso->recevoirCoup();
+        return $perso->recevoirCoup(($this->_puissance)+1);
     }
     
-    public function recevoirCoup(){
-        $this->_degats += 5;
+    public function recevoirCoup($puissance){
+        $this->_degats += $puissance;
         if($this->_degats >= 100){
             return self::PERSONNAGE_TUE;
         }
@@ -64,6 +66,9 @@ class Personnages{
     }
     public function getXp(){
         return $this->_xp;
+    }
+    public function getPuissance(){
+        return $this->_puissance;
     }
     
     public function setId($id){
@@ -94,7 +99,13 @@ class Personnages{
     public function setXp($xp){
         $xp= (int) $xp;
         if($xp >=0 && $xp <= 100){
-            $this->_niveau = $xp;
+            $this->_xp = $xp;
+        }
+    }
+    public function setPuissance($puissance){
+        $puissance= (int) $puissance;
+        if($puissance >=1 && $puissance <= 100){
+            $this->_puissance = $puissance;
         }
     }
 }

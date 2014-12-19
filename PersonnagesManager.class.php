@@ -19,17 +19,19 @@ class PersonnagesManager{
             'degats' => 0,
             'niveau' => 1,
             'xp'  => 0,
+            'puissance' => 1,
         ));
     }
     
     public function modifyPerso(Personnages $perso){
         $query = $this->_db->prepare('UPDATE personnages '
-                . 'SET degats = :degats, niveau = :niveau, xp = :xp '
+                . 'SET degats = :degats, niveau = :niveau, xp = :xp, puissance = :puissance '
                 . 'WHERE id= :id');
         $query->bindValue(':degats', $perso->getDegats(), PDO::PARAM_INT);
         $query->bindValue(':id', $perso->getId(), PDO::PARAM_INT);
         $query->bindValue(':niveau', $perso->getNiveau(), PDO::PARAM_INT);
         $query->bindValue(':xp', $perso->getXp(), PDO::PARAM_INT);
+        $query->bindValue(':puissance', $perso->getPuissance(), PDO::PARAM_INT);
         
         $query->execute();
     }
@@ -58,7 +60,10 @@ class PersonnagesManager{
     public function getList($nom){
         $persos = array();
         
-        $query=$this->_db->prepare('SELECT * FROM personnages WHERE nom <> :nom ORDER BY nom');
+        $query=$this->_db->prepare('SELECT * '
+                . 'FROM personnages '
+                . 'WHERE nom <> :nom '
+                . 'ORDER BY nom');
         $query->execute(array(':nom' => $nom));
         while($donnees = $query->fetch(PDO::FETCH_ASSOC)){
             $persos[] = new Personnages($donnees);

@@ -57,7 +57,7 @@ if (isset($_POST['creer']) && isset($_POST['nom'])) {
     } else {
         $manager->createPerso($perso);
     }
-} elseif (isset($_POST['utilisateur']) && isset($_POST['nom'])) {
+} elseif (isset($_POST['utiliser']) && isset($_POST['nom'])) {
     if ($manager->persoExists($_POST['nom'])) {
         $perso = $manager->selectPerso($_POST['nom']);
     } else {
@@ -122,6 +122,7 @@ if(isset($_GET['frapper'])){
                     Nom : <?php echo htmlspecialchars($perso->getNom()); ?><br />
                     Dégâts : <?php echo $perso->getDegats(); ?><br/>
                     Niveau : <?php echo $perso->getNiveau(); ?><br/>
+                    Puissance : <?php echo $perso->getPuissance(); ?><br/>
                     Expérience : <?php echo $perso->getXp(); ?>
                 </p>
             </fieldset>
@@ -141,6 +142,7 @@ if(isset($_GET['frapper'])){
                                     . ''. htmlspecialchars($unPerso->getNom()). ''
                                     . '</a> (dégâts : '. $unPerso->getDegats(). ')'
                                     . '</a> (niveau : '. $unPerso->getNiveau(). ')'
+                                    . '</a> (puissance : '. $unPerso->getPuissance(). ')'
                                     . '</a> (expérience : '. $unPerso->getXP(). ')'
                                     . '<br />';
                         }
@@ -168,7 +170,9 @@ if (isset($perso)) {
     $_SESSION['perso'] = $perso;
 }
 print"<pre>";
-echo"-----------------";
+echo"-----------------<br/>";
 print_r($_SESSION);
+echo"********";
+print_r($perso);
 echo"-----------------";
 print"</pre>";
