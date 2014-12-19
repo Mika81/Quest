@@ -24,8 +24,12 @@ class Personnages{
         }
     }
     
-    public function frapper(Personnage $perso){
-        if ($perso->id() == $this->_id){
+    public function nomValide(){
+        return !empty($this->_nom);
+    }
+    
+    public function frapper(Personnages $perso){
+        if ($perso->getId() == $this->_id){
             return self::CEST_MOI;
         }
         return $perso->recevoirCoup();
@@ -36,7 +40,6 @@ class Personnages{
         if($this->_degats >= 100){
             return self::PERSONNAGE_TUE;
         }
-        
         return self::PERSONNAGE_FRAPPE;
     }
     

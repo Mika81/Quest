@@ -8,14 +8,10 @@ class PersonnagesManager{
     public function __construct($db){
         $this->setDb($db);
     }
-    
-    public function setDb(PDO $db){
-        $this->_db = $db;
-    }
-    
+        
     public function createPerso(Personnages $perso){
         $query = $this->_db->prepare('INSERT INTO personnages SET nom = :nom');
-        $query->bindValue(':nom', $perso->nom());
+        $query->bindValue(':nom', $perso->getNom());
         $query->execute();
         
         $perso->hydrate(array(
@@ -25,15 +21,15 @@ class PersonnagesManager{
     }
     
     public function modifyPerso(Personnages $perso){
-        $query->$this->_db->prepare('UPDATE personnages SET degats = :degats WHERE id= :id');
-        $query->bindValue(':degats', $perso->degats(), PDO::PARAM_INT);
-        $query->bindValue(':id', $perso->id(), PDO::PARAM_INT);
+        $query = $this->_db->prepare('UPDATE personnages SET degats = :degats WHERE id= :id');
+        $query->bindValue(':degats', $perso->getDegats(), PDO::PARAM_INT);
+        $query->bindValue(':id', $perso->getId(), PDO::PARAM_INT);
         
         $query->execute();
     }
     
     public function deletePerso(Personnages $perso){
-        $this->_db->query('DELETE FROM personnages WHERE id = "'. $perso->id() .'"');
+        $this->_db->query('DELETE FROM personnages WHERE id = "'. $perso->getId() .'"');
     }
     
     public function selectPerso($info){
@@ -53,7 +49,7 @@ class PersonnagesManager{
         return $this->_db->query('SELECT COUNT(*) FROM personnages')->fetchColumn();
     }
     
-    public function listPerso($nom){
+    public function getList($nom){
         $persos = array();
         
         $query=$this->_db->prepare('SELECT * FROM personnages WHERE nom <> :nom ORDER BY nom');
@@ -72,5 +68,9 @@ class PersonnagesManager{
         $checkName = $this->_db->prepare('SELECT COUNT(*) FROM personnages WHERE nom= :nom');
         $checkName->execute(array(':nom' => $info));
         return (bool) $checkName->fetchColumn();
+    }
+    
+    public function setDb(PDO $db){
+        $this->_db = $db;
     }
 }
