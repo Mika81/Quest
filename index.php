@@ -105,6 +105,9 @@ if(isset($_GET['frapper'])){
     <head>
         <title>The Quest</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css.min.css">
+        <link type="text/css" rel="stylesheet" href="css/cosmo.min.css.min.css">
     </head>
     <body>
         <p>Nombre de personnages créés : <?php echo $manager->countPersos(); ?></p>
