@@ -19,7 +19,7 @@ class PersonnagesManager{
             'degats' => 0,
             'niveau' => 1,
             'xp'  => 0,
-            'puissance' => 1,
+            'puissance' => 5,
         ));
     }
     

@@ -41,7 +41,7 @@ class Personnages{
             $this->_xp = 0;
             $this->_niveau += 1;
         }
-        return $perso->recevoirCoup(($this->_puissance)+1);
+        return $perso->recevoirCoup($this->_puissance);
     }
     
     public function recevoirCoup($puissance){
