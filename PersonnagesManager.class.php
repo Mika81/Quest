@@ -17,13 +17,19 @@ class PersonnagesManager{
         $perso->hydrate(array(
             'id' => $this->_db->lastInsertId(),
             'degats' => 0,
+            'niveau' => 1,
+            'xp'  => 0,
         ));
     }
     
     public function modifyPerso(Personnages $perso){
-        $query = $this->_db->prepare('UPDATE personnages SET degats = :degats WHERE id= :id');
+        $query = $this->_db->prepare('UPDATE personnages '
+                . 'SET degats = :degats, niveau = :niveau, xp = :xp '
+                . 'WHERE id= :id');
         $query->bindValue(':degats', $perso->getDegats(), PDO::PARAM_INT);
         $query->bindValue(':id', $perso->getId(), PDO::PARAM_INT);
+        $query->bindValue(':niveau', $perso->getNiveau(), PDO::PARAM_INT);
+        $query->bindValue(':xp', $perso->getXp(), PDO::PARAM_INT);
         
         $query->execute();
     }

@@ -120,7 +120,9 @@ if(isset($_GET['frapper'])){
                 <legend>Mes informations</legend>
                 <p>
                     Nom : <?php echo htmlspecialchars($perso->getNom()); ?><br />
-                    Dégâts : <?php echo $perso->getDegats(); ?>
+                    Dégâts : <?php echo $perso->getDegats(); ?><br/>
+                    Niveau : <?php echo $perso->getNiveau(); ?><br/>
+                    Expérience : <?php echo $perso->getXp(); ?>
                 </p>
             </fieldset>
 
@@ -138,6 +140,8 @@ if(isset($_GET['frapper'])){
                             echo '<a href="?frapper='. $unPerso->getId(). '">'
                                     . ''. htmlspecialchars($unPerso->getNom()). ''
                                     . '</a> (dégâts : '. $unPerso->getDegats(). ')'
+                                    . '</a> (niveau : '. $unPerso->getNiveau(). ')'
+                                    . '</a> (expérience : '. $unPerso->getXP(). ')'
                                     . '<br />';
                         }
                     }

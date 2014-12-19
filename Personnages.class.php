@@ -6,6 +6,8 @@ class Personnages{
     private $_id;
     private $_nom;
     private $_degats;
+    private $_niveau;
+    private $_xp;
     
     const CEST_MOI = 1;
     const PERSONNAGE_TUE = 2;
@@ -32,6 +34,11 @@ class Personnages{
         if ($perso->getId() == $this->_id){
             return self::CEST_MOI;
         }
+        $this->_xp += 10;
+        if($this->_xp >= 100){
+            $this->_xp = 0;
+            $this->_niveau += 1;
+        }
         return $perso->recevoirCoup();
     }
     
@@ -52,6 +59,12 @@ class Personnages{
     public function getDegats(){
         return $this->_degats;
     }
+    public function getNiveau(){
+        return $this->_niveau;
+    }
+    public function getXp(){
+        return $this->_xp;
+    }
     
     public function setId($id){
         $id = (int) $id;
@@ -70,6 +83,18 @@ class Personnages{
             if($degats >= 0 && $degats <= 100){
                 $this->_degats = $degats;
             }
+        }
+    }
+    public function setNiveau($niveau){
+        $niveau= (int) $niveau;
+        if($niveau >=1 && $niveau <= 100){
+            $this->_niveau = $niveau;
+        }
+    }
+    public function setXp($xp){
+        $xp= (int) $xp;
+        if($xp >=0 && $xp <= 100){
+            $this->_niveau = $xp;
         }
     }
 }
