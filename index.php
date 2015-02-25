@@ -46,7 +46,7 @@ $manager = new PersonnagesManager($db);
 
 /* *******conditions pour la création d'un nouveau personnage** */
 if (isset($_POST['creer']) && isset($_POST['nom'])) {
-    $perso = new Personnages(array('nom' => $_POST['nom']));
+    $perso = new Personnages(array('nom' => $_POST['nom'], 'creation' => time()));
 
     if (!$perso->nomValide()) {
         $message = 'Le nom choisi est invalide';
@@ -126,7 +126,8 @@ if(isset($_GET['frapper'])){
                     Dégâts : <?php echo $perso->getDegats(); ?><br/>
                     Niveau : <?php echo $perso->getNiveau(); ?><br/>
                     Puissance : <?php echo $perso->getPuissance(); ?><br/>
-                    Expérience : <?php echo $perso->getXp(); ?>
+                    Expérience : <?php echo $perso->getXp(); ?><br/>
+                    Creation : <?php echo $perso->getCreation(); ?>
                 </p>
             </fieldset>
 
@@ -144,9 +145,10 @@ if(isset($_GET['frapper'])){
                             echo '<a href="?frapper='. $unPerso->getId(). '">'
                                     . ''. htmlspecialchars($unPerso->getNom()). ''
                                     . '</a> (dégâts : '. $unPerso->getDegats(). ')'
-                                    . '</a> (niveau : '. $unPerso->getNiveau(). ')'
-                                    . '</a> (puissance : '. $unPerso->getPuissance(). ')'
-                                    . '</a> (expérience : '. $unPerso->getXP(). ')'
+                                    . '(niveau : '. $unPerso->getNiveau(). ')'
+                                    . '(puissance : '. $unPerso->getPuissance(). ')'
+                                    . '(expérience : '. $unPerso->getXP(). ')'
+                                    . '(creation : '. $unPerso->getCreation(). ')'
                                     . '<br />';
                         }
                     }
@@ -171,12 +173,12 @@ if(isset($_GET['frapper'])){
 <?php
 if (isset($perso)) {
     $_SESSION['perso'] = $perso;
-
+    
     print"<pre>";
-    echo"-SESSION---------------<br/>";
+    echo"-----------------<br/>";
     print_r($_SESSION);
     echo"********";
     print_r($perso);
-    echo"-SESSION perso---------------";
+    echo"-----------------";
     print"</pre>";
 }
