@@ -171,7 +171,7 @@ if(isset($_GET['frapper'])){
 <?php
 if (isset($perso)) {
     $_SESSION['perso'] = $perso;
-}
+
 print"<pre>";
 echo"-----------------<br/>";
 print_r($_SESSION);
@@ -179,3 +179,4 @@ echo"********";
 print_r($perso);
 echo"-----------------";
 print"</pre>";
+}
