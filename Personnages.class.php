@@ -9,6 +9,7 @@ class Personnages{
     private $_niveau;
     private $_xp;
     private $_puissance;
+    private $_creation;
     
     const CEST_MOI = 1;
     const PERSONNAGE_TUE = 2;
@@ -70,6 +71,9 @@ class Personnages{
     public function getPuissance(){
         return $this->_puissance;
     }
+    public function getCreation(){
+        return $this->_creation;
+    }
     
     public function setId($id){
         $id = (int) $id;
@@ -107,5 +111,9 @@ class Personnages{
         if($puissance >=1 && $puissance <= 100){
             $this->_puissance = $puissance;
         }
+    }
+    public function setCreation($creation){
+        $creation = (int) $creation;
+        $this->_creation = $creation;
     }
 }
