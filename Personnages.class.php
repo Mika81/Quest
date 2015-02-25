@@ -9,6 +9,7 @@ class Personnages{
     private $_niveau;
     private $_xp;
     private $_puissance;
+    private $_lastLogin;
     
     const CEST_MOI = 1;
     const PERSONNAGE_TUE = 2;
@@ -70,6 +71,9 @@ class Personnages{
     public function getPuissance(){
         return $this->_puissance;
     }
+    public function getLastLogin(){
+        return $this->_lastLogin;
+    }
     
     public function setId($id){
         $id = (int) $id;
@@ -103,9 +107,14 @@ class Personnages{
         }
     }
     public function setPuissance($puissance){
-        $puissance= (int) $puissance;
+        $puissance = (int) $puissance;
         if($puissance >=1 && $puissance <= 100){
             $this->_puissance = $puissance;
         }
+    }
+    public function setLastLogin($lastLogin){
+        $time = time();
+        $lastLogin = (int) $time;
+        $this->_lastLogin = $lastLogin;
     }
 }

@@ -20,7 +20,17 @@ class PersonnagesManager{
             'niveau' => 1,
             'xp'  => 0,
             'puissance' => 5,
+            'lastLogin' => time()
         ));
+    }
+    
+    public function updateLastLogin($perso){
+        $query = $this->_db->prepare('UPDATE personnages '
+                . 'SET lastLogin = :lastLogin '
+                . 'WHERE id = :id');
+        $query->bindValue(':lastLogin', $perso->getLastlogin());
+        $query->bindValue(':id', $perso->getId());
+        $query->execute();
     }
     
     public function modifyPerso(Personnages $perso){

@@ -56,10 +56,12 @@ if (isset($_POST['creer']) && isset($_POST['nom'])) {
         unset($perso);
     } else {
         $manager->createPerso($perso);
+        $manager->updateLastLogin($perso);
     }
 } elseif (isset($_POST['utiliser']) && isset($_POST['nom'])) {
     if ($manager->persoExists($_POST['nom'])) {
         $perso = $manager->selectPerso($_POST['nom']);
+        $manager->updateLastLogin($perso);
     } else {
         $message = 'Ce personnage n\'existe pas !';
     }
@@ -126,7 +128,8 @@ if(isset($_GET['frapper'])){
                     Dégâts : <?php echo $perso->getDegats(); ?><br/>
                     Niveau : <?php echo $perso->getNiveau(); ?><br/>
                     Puissance : <?php echo $perso->getPuissance(); ?><br/>
-                    Expérience : <?php echo $perso->getXp(); ?>
+                    Expérience : <?php echo $perso->getXp(); ?><br/>
+                    Last Login : <?php echo $perso->getLastLogin(); ?>
                 </p>
             </fieldset>
 
