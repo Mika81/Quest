@@ -10,8 +10,10 @@ class PersonnagesManager{
     }
         
     public function createPerso(Personnages $perso){
-        $query = $this->_db->prepare('INSERT INTO personnages SET nom = :nom');
+        $query = $this->_db->prepare('INSERT INTO personnages SET nom = :nom, '
+                . 'creationDate = :creationDate');
         $query->bindValue(':nom', $perso->getNom());
+        $query->bindValue(':creationDate', time());
         $query->execute();
         
         $perso->hydrate(array(

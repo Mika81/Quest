@@ -6,7 +6,6 @@
 function loadClass($classname) {
     require $classname . '.class.php';
 }
-
 spl_autoload_register('loadClass');
 /* ********************************************** */
 
@@ -36,7 +35,10 @@ $manager = new PersonnagesManager($db);
 
 /* ******************************DESTROY SESSION* */
 if (isset($_GET['deconnexion'])) {
+    /* Insertion d'un timestamp en base de donn�e pour le personnage courant, 
+     * avant le session destroy, afin de sauvegarder sa derni�re connexion */
     $manager->updateLastLogin($perso);
+    /* -- */
     session_destroy();
     header('location: .');
     exit();
@@ -158,9 +160,10 @@ if(isset($_GET['frapper'])){
                             echo '<a href="?frapper='. $unPerso->getId(). '">'
                                     . ''. htmlspecialchars($unPerso->getNom()). ''
                                     . '</a> (dégâts : '. $unPerso->getDegats(). ')'
-                                    . '</a> (niveau : '. $unPerso->getNiveau(). ')'
-                                    . '</a> (puissance : '. $unPerso->getPuissance(). ')'
-                                    . '</a> (expérience : '. $unPerso->getXP(). ')'
+                                    . '(niveau : '. $unPerso->getNiveau(). ')'
+                                    . '(puissance : '. $unPerso->getPuissance(). ')'
+                                    . '(expérience : '. $unPerso->getXP(). ')'
+                                    . '(création le : '. $unPerso->getCreationDate(). ')'
                                     . '<br />';
                         }
                     }

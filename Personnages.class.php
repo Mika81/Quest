@@ -9,6 +9,7 @@ class Personnages{
     private $_niveau;
     private $_xp;
     private $_puissance;
+    private $_creationDate;
     private $_lastLogin;
     
     const CEST_MOI = 1;
@@ -57,10 +58,9 @@ class Personnages{
     
     public function lastLoginDate($perso, $manager){
         $now = time();
-//        $twentyFour = $now - 86400;
-        $twentyFour = $now - 10; /* Variable for tests */
+        $twentyFour = $now - 86400;
+//        $twentyFour = $now - 10; /* Variable for tests */
         $persoLastLogin = $manager->checkLastLogin($perso);
-        echo "24h : ".$twentyFour."- last login : ". $persoLastLogin['lastLogin'];
         if($persoLastLogin['lastLogin'] < $twentyFour){
             if($this->_degats > 10){
                 $this->_degats -= 10;
@@ -90,6 +90,9 @@ class Personnages{
     }
     public function getPuissance(){
         return $this->_puissance;
+    }
+    public function getCreationDate(){
+        return $this->_creationDate;
     }
     public function getLastLogin(){
         return $this->_lastLogin;
@@ -131,6 +134,10 @@ class Personnages{
         if($puissance >=1 && $puissance <= 100){
             $this->_puissance = $puissance;
         }
+    }
+    public function setCreationDate($creationDate){
+        $creationDate = (int) $creationDate;
+        $this->_creationDate = $creationDate;
     }
     public function setLastLogin($lastLogin){
         $time = time();
