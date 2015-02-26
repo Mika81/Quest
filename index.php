@@ -16,17 +16,7 @@ session_start();
 /* ********************************************** */
 
 
-/* ******************************DESTROY SESSION* */
-if (isset($_GET['deconnexion'])) {
-    session_destroy();
-    header('location: .');
-    exit();
-}
-/* ********************************************** */
-
-
 /* *Restaure l'objet si la session perso existe * */
-
 if (isset($_SESSION['perso'])) {
     $perso = $_SESSION['perso'];
 }
@@ -42,6 +32,16 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 /* ***************Instanciation de la classe PersonnagesManager */
 $manager = new PersonnagesManager($db);
 /* ************************************************************ */
+
+
+/* ******************************DESTROY SESSION* */
+if (isset($_GET['deconnexion'])) {
+    $manager->updateLastLogin($perso);
+    session_destroy();
+    header('location: .');
+    exit();
+}
+/* ********************************************** */
 
 
 /* *******conditions pour la création d'un nouveau personnage** */
@@ -61,9 +61,17 @@ if (isset($_POST['creer']) && isset($_POST['nom'])) {
 } elseif (isset($_POST['utiliser']) && isset($_POST['nom'])) {
     if ($manager->persoExists($_POST['nom'])) {
         $perso = $manager->selectPerso($_POST['nom']);
-        $manager->updateLastLogin($perso);
-        $perso->addEnergy($perso);
-        $manager->takeOffDamages($perso);
+        $retour = $perso->lastLoginDate($perso, $manager);
+        switch ($retour){
+            case Personnages::RETIRER_DEGATS :
+                $manager->takeOffDamages($perso);
+                $message = "Bravo, vous recuperez au maximum 10 de degats !!";
+                break;
+            case Personnages::NE_PAS_RETIRER_DEGATS :
+                $message = "Votre derniere connexion est trop recente pour "
+                    . "recuperer des degats!!";
+                break;
+        }
     } else {
         $message = 'Ce personnage n\'existe pas !';
     }
@@ -121,6 +129,7 @@ if(isset($_GET['frapper'])){
         }
 
         if (isset($perso)) {
+            $thisPersoLastLogin = $manager->checkLastLogin($perso);
             ?>
             <p><a href="?deconnexion=1">Déconnexion</a></p>
             <fieldset>
@@ -131,7 +140,7 @@ if(isset($_GET['frapper'])){
                     Niveau : <?php echo $perso->getNiveau(); ?><br/>
                     Puissance : <?php echo $perso->getPuissance(); ?><br/>
                     Expérience : <?php echo $perso->getXp(); ?><br/>
-                    Last Login : <?php echo $perso->getLastLogin(); ?>
+                    Last Login : <?php echo $thisPersoLastLogin['lastLogin']; ?>
                 </p>
             </fieldset>
 

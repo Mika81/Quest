@@ -100,6 +100,16 @@ class PersonnagesManager{
         $query -> execute();
     }
     
+    public function checkLastLogin(Personnages $perso){
+        $query = $this->_db->prepare('SELECT lastLogin '
+                . 'FROM personnages '
+                . 'WHERE id = :id');
+        $query -> bindValue(':id', $perso->getId(), PDO::PARAM_INT);
+        $query -> execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
     public function setDb(PDO $db){
         $this->_db = $db;
     }

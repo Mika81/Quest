@@ -14,6 +14,8 @@ class Personnages{
     const CEST_MOI = 1;
     const PERSONNAGE_TUE = 2;
     const PERSONNAGE_FRAPPE = 3;
+    const RETIRER_DEGATS = 4;
+    const NE_PAS_RETIRER_DEGATS = 5;
     
     public function __construct(array $donnes){
         $this->hydrate($donnes);
@@ -53,17 +55,21 @@ class Personnages{
         return self::PERSONNAGE_FRAPPE;
     }
     
-    public function addEnergy($perso){
+    public function lastLoginDate($perso, $manager){
         $now = time();
-        //$twentyFour = $now - 86400;
-        $twentyFour = $now - 2;
-        $persoLastLogin = $perso->getLastLogin();
-        if($persoLastLogin > $twentyFour){
+//        $twentyFour = $now - 86400;
+        $twentyFour = $now - 10; /* Variable for tests */
+        $persoLastLogin = $manager->checkLastLogin($perso);
+        echo "24h : ".$twentyFour."- last login : ". $persoLastLogin['lastLogin'];
+        if($persoLastLogin['lastLogin'] < $twentyFour){
             if($this->_degats > 10){
                 $this->_degats -= 10;
             }else{
                 $this->_degats = 0;
             }
+            return self::RETIRER_DEGATS;
+        }else{
+            return self::NE_PAS_RETIRER_DEGATS;
         }
     }
     
