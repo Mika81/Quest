@@ -53,6 +53,20 @@ class Personnages{
         return self::PERSONNAGE_FRAPPE;
     }
     
+    public function addEnergy($perso){
+        $now = time();
+        //$twentyFour = $now - 86400;
+        $twentyFour = $now - 2;
+        $persoLastLogin = $perso->getLastLogin();
+        if($persoLastLogin > $twentyFour){
+            if($this->_degats > 10){
+                $this->_degats -= 10;
+            }else{
+                $this->_degats = 0;
+            }
+        }
+    }
+    
     public function getId(){
         return $this->_id;
     }

@@ -62,6 +62,8 @@ if (isset($_POST['creer']) && isset($_POST['nom'])) {
     if ($manager->persoExists($_POST['nom'])) {
         $perso = $manager->selectPerso($_POST['nom']);
         $manager->updateLastLogin($perso);
+        $perso->addEnergy($perso);
+        $manager->takeOffDamages($perso);
     } else {
         $message = 'Ce personnage n\'existe pas !';
     }

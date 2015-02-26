@@ -32,7 +32,7 @@ class PersonnagesManager{
         $query->bindValue(':id', $perso->getId());
         $query->execute();
     }
-    
+
     public function modifyPerso(Personnages $perso){
         $query = $this->_db->prepare('UPDATE personnages '
                 . 'SET degats = :degats, niveau = :niveau, xp = :xp, puissance = :puissance '
@@ -89,6 +89,15 @@ class PersonnagesManager{
         $checkName = $this->_db->prepare('SELECT COUNT(*) FROM personnages WHERE nom= :nom');
         $checkName->execute(array(':nom' => $info));
         return (bool) $checkName->fetchColumn();
+    }
+    
+    public function takeOffDamages(Personnages $perso){
+        $query = $this->_db->prepare('UPDATE personnages '
+                . 'SET degats = :degats '
+                . 'WHERE id = :id');
+        $query -> bindValue(':degats', $perso->getDegats(), PDO::PARAM_INT);
+        $query -> bindValue(':id', $perso->getId(), PDO::PARAM_INT);
+        $query -> execute();
     }
     
     public function setDb(PDO $db){
