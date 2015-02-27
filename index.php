@@ -124,6 +124,10 @@ if(isset($_GET['frapper'])){
         <link type="text/css" rel="stylesheet" href="css/cosmo.min.css.min.css">
     </head>
     <body>
+        <?php
+        $test = $manager->showMe();
+        print "<pre>";print_r($test);print "</pre>";
+        ?>
         <p>Nombre de personnages créés : <?php echo $manager->countPersos(); ?></p>
         <?php
         if (isset($message)) {

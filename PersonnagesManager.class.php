@@ -115,4 +115,12 @@ class PersonnagesManager{
     public function setDb(PDO $db){
         $this->_db = $db;
     }
+    
+    public function showMe(){
+        $query = $this->_db->prepare('CALL show_me()');
+        $query->execute();
+        $return=$query->fetch(PDO::PARAM_INT);
+        $query->closeCursor();
+        return $return;
+    }
 }
